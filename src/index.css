@@ -1,15 +1,226 @@
 @import 'tailwindcss';
 
 @theme {
+  --font-sans: 'Poppins', 'Noto Sans Devanagari', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --font-script: 'Great Vibes', 'Segoe Script', cursive;
+
   --color-diya-50: #fff7ed;
   --color-diya-100: #ffedd5;
   --color-diya-400: #fb923c;
   --color-diya-500: #f97316;
   --color-diya-600: #ea580c;
   --color-diya-900: #7c2d12;
+
+  --color-night-900: #07030f;
+  --color-night-800: #120826;
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.15;
+    transform: scale(0.7);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+@keyframes flicker {
+  0%,
+  100% {
+    transform: scaleY(1) scaleX(1) rotate(0deg);
+    opacity: 0.95;
+  }
+  25% {
+    transform: scaleY(1.12) scaleX(0.94) rotate(-1.5deg);
+    opacity: 1;
+  }
+  50% {
+    transform: scaleY(0.9) scaleX(1.05) rotate(1deg);
+    opacity: 0.85;
+  }
+  75% {
+    transform: scaleY(1.08) scaleX(0.97) rotate(-0.5deg);
+    opacity: 1;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes rise {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.6);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.9;
+  }
+  85% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translate3d(var(--drift, 0px), -105vh, 0) scale(1.15);
+    opacity: 0;
+  }
+}
+
+@keyframes shimmer {
+  to {
+    background-position: 220% center;
+  }
+}
+
+@keyframes glowPulse {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes firework {
+  0% {
+    transform: rotate(var(--angle)) translateY(0) scale(0.35);
+    opacity: 1;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(var(--angle)) translateY(-72px) scale(0.05);
+    opacity: 0;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes reveal {
+  0% {
+    opacity: 0;
+    transform: scale(0.6) translateY(10px);
+    filter: blur(8px);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.08) translateY(0);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes glowIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes sparkBurst {
+  0% {
+    transform: rotate(var(--a)) translateY(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(var(--a)) translateY(calc(-1 * var(--d))) scale(0.15);
+    opacity: 0;
+  }
 }
 
 body {
   margin: 0;
   min-height: 100svh;
+  background-color: var(--color-night-900);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.text-shimmer {
+  background-image: linear-gradient(
+    100deg,
+    #fde68a,
+    #fbbf24 18%,
+    #fffbeb 38%,
+    #f59e0b 58%,
+    #fde68a 78%,
+    #fbbf24
+  );
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 8s linear infinite;
+  filter: drop-shadow(0 0 28px rgba(251, 191, 36, 0.35));
+}
+
+.glass {
+  background: linear-gradient(
+    160deg,
+    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0.02)
+  );
+  border: 1px solid rgba(251, 191, 36, 0.18);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.anim-flicker {
+  transform-origin: bottom center;
+  animation: flicker 1.6s ease-in-out infinite;
+}
+
+.anim-float {
+  animation: float 7s ease-in-out infinite;
+}
+
+.anim-glow {
+  animation: glowPulse 3s ease-in-out infinite;
+}
+
+.anim-spin-slow {
+  animation: spin 90s linear infinite;
+}
+
+.anim-spin-reverse {
+  animation: spin 70s linear infinite reverse;
+}
+
+.anim-reveal {
+  animation: reveal 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }
